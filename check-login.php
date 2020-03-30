@@ -18,8 +18,11 @@
 				$nom = $_POST['nom'];
 				$prenom = $_POST['prenom']; 
 				$pass = $_POST['pass'];
+
+				$nomC = openssl_encrypt ($_POST['nom'], $method, $key);
+				$prenomC = openssl_encrypt ($_POST['prenom'], $method, $key);
 				
-				$result = mysqli_query($conn, "SELECT * FROM users WHERE Nom = '$nom' and Prenom = '$prenom'");
+				$result = mysqli_query($conn, "SELECT * FROM users WHERE Nom = '$nomC' and Prenom = '$prenomC'");
 				
 				$row = mysqli_fetch_assoc($result);
 				
@@ -30,13 +33,17 @@
 					$_SESSION['loggedin'] = true;
 					$_SESSION['prenom'] = $row['prenom'];
 					$_SESSION['start'] = time();
-					$_SESSION['expire'] = $_SESSION['start'] + (10 * 60) ;						
+					$_SESSION['expire'] = $_SESSION['start'] + (10 * 60);
 					
-					echo "<div class='alert alert-success mt-4' role='alert'><strong>Bienvenue!</strong> $row[Prenom]				
+					$ad = openssl_decrypt ($row['Adresse'], $method, $key);
+					$cp = openssl_decrypt ($row['CP'], $method, $key);
+					$vil = openssl_decrypt ($row['Ville'], $method, $key);
+					
+					echo "<div class='alert alert-success mt-4' role='alert'><strong>Bienvenue!</strong> $prenom				
 					<p><a href='logout.php'>Se deconnecter</a></p></div>
-					<p>Adresse: $row[Adresse]</p>
-					<p>Code Postal: $row[CP]</p>
-					<p>Ville: $row[Ville]</p>";	
+					<p>Adresse: $ad</p>
+					<p>Code Postal: $cp</p>
+					<p>Ville: $vil</p>";	
 				
 				} else {
 					echo "<div class='alert alert-danger mt-4' role='alert'>Email ou Mot de passe incorrects!

@@ -9,13 +9,13 @@
 		<div class="container">
 			<?php
 				include 'conn.php';
-				
-				$nom = $_POST['nom'];
-				$prenom = $_POST['prenom'];
+
+				$nom = openssl_encrypt ($_POST['nom'], $method, $key);
+				$prenom = openssl_encrypt ($_POST['prenom'], $method, $key);
 				$pass = $_POST['pass'];
-				$adr = $_POST['adresse'];
-				$cp = $_POST['cp'];
-				$ville = $_POST['ville'];
+				$adr = openssl_encrypt ($_POST['adresse'], $method, $key);
+				$cp = openssl_encrypt ($_POST['cp'], $method, $key);
+				$ville = openssl_encrypt ($_POST['ville'], $method, $key);
 				
 				$passHash = password_hash($pass, PASSWORD_DEFAULT);
 				
@@ -29,8 +29,6 @@
 					<a class='btn btn-outline-primary' href='login.html' role='button'>Se connecter</a></div>";
 				}
 				mysqli_close($conn);
-
-				
 			?>
 		</div>
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

@@ -9,4 +9,7 @@
     if(isset($conn)){
         echo 'DB is connected';
     }
+
+    $key = 'qkwjdiw239&&jdafweihbrhnan&^%$ggdnawhd4njshjwuuO';
+    $method = 'aes128';
 ?>
